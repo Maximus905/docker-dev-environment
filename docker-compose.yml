@@ -11,10 +11,15 @@ services:
       - phpsocket:/var/run
 
   php:
-    image: maximus905/php-fpm:7.2.10
+    build:
+      context: ./docker/php
+      args:
+        fpm_listen: /var/run/php-fpm.sock
+#        fpm_listen: 127.0.0.1:9000
     volumes:
       - ./www:/var/www
       - ./conf/php/php.ini:/usr/local/etc/php/php.ini
+      - ./conf/php/zz-docker.conf:/usr/local/etc/php-fpm.d/zz-docker.conf
       - phpsocket:/var/run
 volumes:
   phpsocket:
