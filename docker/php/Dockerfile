@@ -1,5 +1,5 @@
 FROM php:7.2.10-fpm
-MAINTAINER dev@chialab.it
+MAINTAINER karasev.dmitry@gmail.com
 
 ENV fpm_conf /usr/local/etc/php-fpm.d/www.conf
 ENV zz_docker_conf /usr/local/etc/php-fpm.d/zz-docker.conf
@@ -30,7 +30,7 @@ RUN buildDeps=" \
     && docker-php-ext-configure ldap --with-libdir=lib/x86_64-linux-gnu/ \
     && docker-php-ext-install -j$(nproc) ldap \
     && docker-php-ext-install -j$(nproc) exif \
-    && docker-php-ext-install -j$(nproc) sockets \
+#    && docker-php-ext-install -j$(nproc) sockets \
     && pecl install memcached redis \
     && docker-php-ext-enable memcached.so redis.so \
     && apt-get purge -y --auto-remove $buildDeps \
@@ -50,8 +50,8 @@ RUN apt-get update && apt-get install -y procps htop \
     && rm -r /var/lib/apt/lists/*
 
 #to use socket fpm_listen=/var/run/php-fpm.sock (You can do it in compose file)
-ARG fpm_listen=127.0.0.1:900
-#ARG fpm_listen=/var/run/php-fpm.sock
+#ARG fpm_listen=127.0.0.1:900
+ARG fpm_listen=/var/run/php-fpm.sock
 ARG user_UID=3000
 ARG user_NAME=www-user
 ARG group_UID=3000
