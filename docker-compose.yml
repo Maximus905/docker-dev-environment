@@ -1,7 +1,7 @@
 version: '3'
 services:
   nginx:
-    image: cust-nginx
+    image: maximus905/nginx
     ports:
       - "8080:80"
     volumes:
@@ -11,15 +11,15 @@ services:
       - phpsocket:/var/run
 
   php:
-    build:
-      context: ./docker/php
-      args:
-        fpm_listen: /var/run/php-fpm.sock
+    image: maximus905/php-fpm-socket:7.2.10-socket
+#    build:
+#      context: https://github.com/Maximus905/docker-php-fpm.git#7.2.10
+#      args:
+#        fpm_listen: /var/run/php-fpm.sock
 #        fpm_listen: 127.0.0.1:9000
     volumes:
       - ./www:/var/www
       - ./conf/php/php.ini:/usr/local/etc/php/php.ini
-      - ./conf/php/zz-docker.conf:/usr/local/etc/php-fpm.d/zz-docker.conf
       - phpsocket:/var/run
 volumes:
   phpsocket:
