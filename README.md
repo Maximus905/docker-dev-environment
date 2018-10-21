@@ -1,0 +1,1 @@
+dev statck with PHP-FPM, nginx and postgresql
