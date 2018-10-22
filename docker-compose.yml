@@ -11,7 +11,8 @@ services:
       - phpsocket:/var/run
 
   php:
-    image: maximus905/php-fpm-socket:7.2.10-socket
+    image: test
+#    image: maximus905/php-fpm-socket:7.2.10-socket
 #    build:
 #      context: https://github.com/Maximus905/docker-php-fpm.git#7.2.10
 #      args:
@@ -20,6 +21,7 @@ services:
     volumes:
       - ./www:/var/www
       - ./conf/php/php.ini:/usr/local/etc/php/php.ini
+      - ./conf/php/custom.d:/usr/local/etc/php/custom.d
       - phpsocket:/var/run
 volumes:
   phpsocket:
