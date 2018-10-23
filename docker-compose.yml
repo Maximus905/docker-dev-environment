@@ -11,17 +11,25 @@ services:
       - phpsocket:/var/run
 
   php:
-    image: test
-#    image: maximus905/php-fpm-socket:7.2.10-socket
-#    build:
-#      context: https://github.com/Maximus905/docker-php-fpm.git#7.2.10
-#      args:
-#        fpm_listen: /var/run/php-fpm.sock
-#        fpm_listen: 127.0.0.1:9000
+    image: maximus905/php-fpm-socket:7.2.10
     volumes:
       - ./www:/var/www
       - ./conf/php/php.ini:/usr/local/etc/php/php.ini
       - ./conf/php/custom.d:/usr/local/etc/php/custom.d
       - phpsocket:/var/run
+  db:
+    image: postgres:11
+    ports:
+      - "5432:5432"
+    restart: always
+    volumes:
+      - pgdb:/var/lib/postgresql/data
+      - ./db_backups:/var/db_backups
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8081:8080
 volumes:
   phpsocket:
+  pgdb:
