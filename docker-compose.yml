@@ -11,7 +11,9 @@ services:
       - phpsocket:/var/run
 
   php:
-    image: maximus905/php-fpm-socket:7.2.10
+    image: maximus905/php-fpm
+    environment:
+      LISTEN_SOCKET: 'yes'
     volumes:
       - ./www:/var/www
       - ./conf/php/php.ini:/usr/local/etc/php/php.ini
